@@ -1,6 +1,8 @@
 package info.preva1l.showman
 
+import info.preva1l.showman.events.Event
 import info.preva1l.showman.internal.EventBus
+import info.preva1l.showman.internal.adapters.event.EventAdapter
 
 /**
  * Created on 19/02/2025
@@ -9,6 +11,7 @@ import info.preva1l.showman.internal.EventBus
  */
 abstract class Showman(
     val eventBus: EventBus,
+    val eventAdapterMap: MutableMap<Class<*>, EventAdapter<out Event>> = mutableMapOf(),
 ) {
     protected abstract fun init()
 

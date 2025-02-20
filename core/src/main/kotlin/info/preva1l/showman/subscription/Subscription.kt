@@ -4,6 +4,7 @@ import info.preva1l.showman.EventOrder
 import info.preva1l.showman.Showman
 import info.preva1l.showman.events.Event
 import info.preva1l.showman.internal.EventBus
+import java.util.UUID
 
 /**
  * Created on 19/02/2025
@@ -11,6 +12,8 @@ import info.preva1l.showman.internal.EventBus
  * @author Preva1l
  */
 interface Subscription<T : Event> {
+    fun identifier(): UUID
+
     fun unsubscribe() {
         Showman.instance.eventBus.unsubscribe(this)
     }

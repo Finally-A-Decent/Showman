@@ -36,7 +36,10 @@ abstract class EventBus {
 
     fun <T : Event> subscribe(vararg subscribers: Any) {
         for (subscriber in subscribers) {
-            for (method in subscriber.javaClass.declaredMethods) {
+            val methods = subscriber.javaClass.declaredMethods.also {
+                subscriber.javaClass.methods
+            }
+            for (method in methods) {
                 val subscribeAnnotation = method.getAnnotation(Subscribe::class.java)
                 if (subscribeAnnotation == null || method.parameterCount != 1) continue
                 val filterAnnotations = method.getAnnotationsByType(Filter::class.java) ?: arrayOf()
@@ -67,8 +70,6 @@ abstract class EventBus {
             }
         }
     }
-
-    abstract fun <T : Event> post(event: T): Boolean
 
     abstract fun <T : Event> isActive(subscription: Subscription<T>): Boolean
 

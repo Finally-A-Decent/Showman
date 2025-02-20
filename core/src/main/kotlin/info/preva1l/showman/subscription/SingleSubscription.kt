@@ -15,6 +15,7 @@ data class SingleSubscription<T : Event>(
     val handler: (T) -> Unit,
 ) : Subscription<T> {
     private val identifier: UUID = UUID.randomUUID()
+    override fun identifier(): UUID = identifier
 
     override fun handler(): (T) -> Unit = handler
     override fun primaryEventClass(): Class<out T> = eventClass
