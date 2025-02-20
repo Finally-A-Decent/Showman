@@ -35,6 +35,7 @@ class BukkitEventBus : EventBus() {
                             (BukkitShowman.obtain().eventAdapterMap[subscription.primaryEventClass()] as BukkitEventAdapter<T>?)!!
                         val showmanEvent = eventAdapter.adapt(event)
                         subscription.handler().invoke(showmanEvent)
+                        eventAdapter.fillBukkitEvent(showmanEvent, event)
                     }
                 } catch (ex: InvocationTargetException) {
                     throw EventException(ex.cause)

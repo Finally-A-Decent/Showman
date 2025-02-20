@@ -9,4 +9,6 @@ import info.preva1l.showman.events.Event
  */
 interface BukkitEventAdapter<T : Event> : EventAdapter<T> {
     fun adapt(event: org.bukkit.event.Event): T
+
+    fun fillBukkitEvent(event: T, bukkitEvent: org.bukkit.event.Event)
 }
