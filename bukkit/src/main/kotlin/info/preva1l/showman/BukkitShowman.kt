@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin
  *
  * @author Preva1l
  */
-internal class BukkitShowman(
+class BukkitShowman internal constructor(
     internal val plugin: JavaPlugin,
     internal val showmanEventToNativeEventMap: MutableMap<Class<out Event>, Class<out org.bukkit.event.Event>> = mutableMapOf(),
 ) : Showman(BukkitEventBus()) {
