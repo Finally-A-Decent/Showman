@@ -35,6 +35,18 @@ class BukkitShowman internal constructor(
 
     companion object {
         @JvmStatic
+        inline fun <reified S : Showman> create(plugin: JavaPlugin) {
+            create(S::class.java, plugin)
+        }
+
+        @JvmStatic
+        fun create(showman: Class<out Showman>, plugin: JavaPlugin) {
+            if (isReady()) throw IllegalStateException("Showman has already been initialized")
+            instance = showman.getDeclaredConstructor().newInstance(plugin)
+            instance.init()
+        }
+
+        @JvmStatic
         fun obtain(): BukkitShowman = instance as BukkitShowman
     }
 }

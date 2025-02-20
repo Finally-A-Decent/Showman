@@ -13,17 +13,12 @@ abstract class Showman(
     val eventBus: EventBus,
     val eventAdapterMap: MutableMap<Class<*>, EventAdapter<out Event>> = mutableMapOf(),
 ) {
-    protected abstract fun init()
+    abstract fun init()
 
     companion object {
         @JvmStatic
         lateinit var instance: Showman
 
-        @JvmStatic
-        fun create(showman: Class<out Showman>) {
-            if (this::instance.isInitialized) throw IllegalStateException("Showman has already been initialized")
-            this.instance = showman.getDeclaredConstructor().newInstance()
-            instance.init()
-        }
+        fun isReady(): Boolean = this::instance.isInitialized
     }
 }
