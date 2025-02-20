@@ -56,7 +56,8 @@ abstract class EventBus {
                     SingleSubscription(
                         eventClass,
                         subscribeAnnotation.value,
-                        filters
+                        filters,
+                        subscribeAnnotation.ignoreCancelled
                     ) { event: T ->
                         try {
                             method.invoke(subscriber, event)
