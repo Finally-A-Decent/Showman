@@ -16,10 +16,6 @@ import java.util.UUID
  * @author Preva1l
  */
 class BukkitEventBus : EventBus() {
-    override fun <T : Event> isActive(subscription: Subscription<T>): Boolean {
-        TODO("Not yet implemented")
-    }
-
     override fun <T : Event, S : Subscription<T>> complete(subscription: S): S {
         val bukkitEventClass = BukkitShowman.obtain().showmanEventToNativeEventMap[subscription.primaryEventClass()]
             ?: throw IllegalStateException("Couldn't find a mapping for ${subscription.primaryEventClass().simpleName}")
@@ -51,6 +47,17 @@ class BukkitEventBus : EventBus() {
         return subscription
     }
 
+    override fun <T : Event> isActive(subscription: Subscription<T>): Boolean {
+        val listeners = HandlerList.getRegisteredListeners(BukkitShowman.obtain().plugin)
+        for (registeredListener in listeners) {
+            val listener = registeredListener.listener
+            if (listener !is ShowmanBukkitListener) continue
+            if (listener.showmanIdentifier() != subscription.identifier()) continue
+            return true
+        }
+        return false
+    }
+
     override fun <T : Event> unsubscribe(subscription: Subscription<T>) {
         val listeners = HandlerList.getRegisteredListeners(BukkitShowman.obtain().plugin)
         for (registeredListener in listeners) {
@@ -59,6 +66,5 @@ class BukkitEventBus : EventBus() {
             if (listener.showmanIdentifier() != subscription.identifier()) continue
             HandlerList.unregisterAll(listener)
         }
-        HandlerList.getHandlerLists()
     }
 }
