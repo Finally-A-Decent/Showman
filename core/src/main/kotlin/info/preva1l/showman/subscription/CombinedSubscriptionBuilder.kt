@@ -14,7 +14,7 @@ class CombinedSubscriptionBuilder<T : Event> internal constructor(
     private val parentClass: Class<T>,
     private val childClasses: MutableList<Class<T>>,
     private var order: EventOrder,
-    private var ignoreCancelled: Boolean,
+    private var ignoreCancelled: Boolean = false,
     private val filters: MutableList<(T) -> Boolean> = ArrayList()
 ) : SubscriptionBuilder<T, CombinedSubscription<T>> {
 
