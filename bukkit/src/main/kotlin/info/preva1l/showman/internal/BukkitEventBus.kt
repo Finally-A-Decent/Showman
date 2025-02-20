@@ -43,7 +43,8 @@ class BukkitEventBus : EventBus() {
                     throw EventException(t)
                 }
             },
-            BukkitShowman.obtain().plugin
+            BukkitShowman.obtain().plugin,
+            subscription.ignoreCancelled()
         )
         return subscription
     }

@@ -29,4 +29,6 @@ interface Subscription<T : Event> {
     fun priority(): EventOrder
 
     fun filters(): List<(T) -> Boolean>
+
+    fun ignoreCancelled(): Boolean
 }

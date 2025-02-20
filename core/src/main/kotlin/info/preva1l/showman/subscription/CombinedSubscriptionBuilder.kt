@@ -14,6 +14,7 @@ class CombinedSubscriptionBuilder<T : Event> internal constructor(
     private val parentClass: Class<T>,
     private val childClasses: MutableList<Class<T>>,
     private var order: EventOrder,
+    private var ignoreCancelled: Boolean,
     private val filters: MutableList<(T) -> Boolean> = ArrayList()
 ) : SubscriptionBuilder<T, CombinedSubscription<T>> {
 
@@ -24,6 +25,7 @@ class CombinedSubscriptionBuilder<T : Event> internal constructor(
                 childClasses,
                 order,
                 filters,
+                ignoreCancelled,
                 handler
             )
         )
@@ -35,6 +37,11 @@ class CombinedSubscriptionBuilder<T : Event> internal constructor(
 
     override fun priority(eventOrder: EventOrder): CombinedSubscriptionBuilder<T> {
         order = eventOrder
+        return this
+    }
+
+    override fun ignoreCancelled(boolean: Boolean): SubscriptionBuilder<T, CombinedSubscription<T>> {
+        ignoreCancelled = boolean
         return this
     }
 }

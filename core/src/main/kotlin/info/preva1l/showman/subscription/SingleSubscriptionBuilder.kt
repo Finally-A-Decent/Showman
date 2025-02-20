@@ -13,6 +13,7 @@ import info.preva1l.showman.internal.EventBus
 class SingleSubscriptionBuilder<T : Event> internal constructor(
     private val event: Class<T>,
     private var order: EventOrder,
+    private var ignoreCancelled: Boolean,
     private val filters: MutableList<(T) -> Boolean> = ArrayList()
 ) : SubscriptionBuilder<T, SingleSubscription<T>> {
 
@@ -22,6 +23,7 @@ class SingleSubscriptionBuilder<T : Event> internal constructor(
                 event,
                 order,
                 filters,
+                ignoreCancelled,
                 handler
             )
         )
@@ -33,6 +35,11 @@ class SingleSubscriptionBuilder<T : Event> internal constructor(
 
     override fun priority(eventOrder: EventOrder): SingleSubscriptionBuilder<T> {
         order = eventOrder
+        return this
+    }
+
+    override fun ignoreCancelled(boolean: Boolean): SubscriptionBuilder<T, SingleSubscription<T>> {
+        this.ignoreCancelled = boolean
         return this
     }
 }

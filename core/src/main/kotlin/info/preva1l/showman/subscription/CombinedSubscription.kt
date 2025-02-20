@@ -13,6 +13,7 @@ data class CombinedSubscription<T : Event>(
     val subClasses: List<Class<T>>,
     private val priority: EventOrder,
     private val filters: List<(T) -> Boolean>,
+    private val ignoreCancelled: Boolean,
     val handler: (T) -> Unit,
 ) : Subscription<T> {
     private val identifier: UUID = UUID.randomUUID()
@@ -22,6 +23,7 @@ data class CombinedSubscription<T : Event>(
     override fun primaryEventClass(): Class<out T> = parentClass
     override fun priority(): EventOrder = priority
     override fun filters(): List<(T) -> Boolean> = filters
+    override fun ignoreCancelled(): Boolean = ignoreCancelled
 
     override fun equals(other: Any?): Boolean {
         if (other == null || javaClass != other.javaClass) return false

@@ -17,4 +17,6 @@ interface SubscriptionBuilder<T : Event, S : Subscription<T>> {
     fun filter(filter: (T) -> Boolean): SubscriptionBuilder<T, S>
 
     fun filter(filter: Filters): SubscriptionBuilder<T, S>  = filter(filter.predicate)
+
+    fun ignoreCancelled(boolean: Boolean): SubscriptionBuilder<T, S>
 }
