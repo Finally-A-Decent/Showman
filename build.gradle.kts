@@ -75,7 +75,7 @@ subprojects {
 
     publishing {
         repositories.configureFinallyADecentRepository(
-            dev = true
+            dev = currentBranch != "master"
         )
 
         publications {
