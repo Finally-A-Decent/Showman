@@ -4,5 +4,6 @@ include(":core")
 
 include(":backend")
 
+include(":bukkit-common")
 include(":bukkit")
-include(":bukkit-1_14")
+include(":bukkit-1_12")

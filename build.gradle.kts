@@ -17,7 +17,7 @@ if (currentBranch != "master") {
 
 allprojects {
     group = "info.preva1l.showman"
-    version = "1.0.0"
+    version = "0.0.1"
 
     repositories {
         mavenCentral()

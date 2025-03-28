@@ -2,6 +2,7 @@ package info.preva1l.showman
 
 import info.preva1l.showman.events.Event
 import info.preva1l.showman.internal.EventBus
+import info.preva1l.showman.internal.LibraryLoader
 import info.preva1l.showman.internal.adapters.event.EventAdapter
 
 /**
@@ -15,10 +16,15 @@ abstract class Showman(
 ) {
     abstract fun init()
 
+    protected fun loadLibraries() {
+        LibraryLoader.load("com.google.code.gson:gson:2.12.1")
+    }
+
     companion object {
         @JvmStatic
         lateinit var instance: Showman
 
+        @JvmStatic
         fun isReady(): Boolean = this::instance.isInitialized
     }
 }

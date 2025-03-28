@@ -1,10 +1,9 @@
 package info.preva1l.showman
 
 import info.preva1l.showman.events.Event
-import info.preva1l.showman.events.player.PlayerJoinEvent
 import info.preva1l.showman.internal.BukkitEventBus
+import info.preva1l.showman.internal.EventMappingProvider
 import info.preva1l.showman.internal.adapters.event.BukkitEventAdapter
-import info.preva1l.showman.internal.adapters.event.PlayerEventAdapters
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
@@ -15,16 +14,14 @@ import org.bukkit.plugin.java.JavaPlugin
 class BukkitShowman internal constructor(
     internal val plugin: JavaPlugin,
     internal val showmanEventToNativeEventMap: MutableMap<Class<out Event>, Class<out org.bukkit.event.Event>> = mutableMapOf(),
-) : Showman(BukkitEventBus()) {
+) : Showman(BukkitEventBus()), EventMappingProvider {
     override fun init() {
-        register(
-            PlayerJoinEvent::class.java,
-            PlayerEventAdapters.playerJoinEvent,
-            org.bukkit.event.player.PlayerJoinEvent::class.java,
-        )
+        loadLibraries()
+
+        registerEventMappings(this)
     }
 
-    private fun register(
+    fun register(
         eventClass: Class<out Event>,
         adapterClass: BukkitEventAdapter<*>,
         nativeEventClass: Class<out org.bukkit.event.Event>
